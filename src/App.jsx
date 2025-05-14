@@ -8,6 +8,7 @@ import Verify from "./pages/Verify/Verify";
 import Login from "./pages/Login/Login";
 import DashBoard from "./pages/DashBoard/DashBoard";
 import Forgot from "./pages/Forget/Forget";
+import Reset from "./pages/Reset/Reset";
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
         <Route path="/verify" element={<Verify />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/forgetpassword" element={<Forgot/>}/>
+        <Route path="/forgetpassword" element={<Forgot />} />
+        <Route path="/resetpassword/:token" element={<Reset />} />
       </Routes>
     </BrowserRouter>
   );
