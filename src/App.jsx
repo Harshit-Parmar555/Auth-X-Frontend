@@ -1,10 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// pages import
+import Land from "./pages/Land/Land";
+
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes></Routes>
+      <Routes>
+        <Route path="/" element={<Land />} />
+      </Routes>
     </BrowserRouter>
   );
 };
