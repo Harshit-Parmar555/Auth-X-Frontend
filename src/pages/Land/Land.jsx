@@ -32,7 +32,7 @@ const Land = () => {
 
         <div className="mt-6 sm:mt-8 w-full flex flex-col items-center gap-3">
           <Button
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/register")}
             className="bg-blue-500 hover:bg-blue-600 text-white font-[Space_Grotesk] px-6 py-2 rounded-md w-full sm:w-80 text-sm sm:text-base transition duration-300 ease-in-out cursor-pointer"
           >
             Create Account
