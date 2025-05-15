@@ -1,3 +1,4 @@
+// Importing necessary modules
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -13,6 +14,7 @@ import NotFound from "./pages/404/NotFound";
 import Terms from "./pages/T&P/Terms";
 import Privacy from "./pages/T&P/Privacy";
 
+// Toaster import
 import { Toaster } from "react-hot-toast";
 
 // store import
@@ -39,6 +41,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
   return children;
 };
 
+// Loader import
 import Loader from "./custom/Loader";
 
 const App = () => {

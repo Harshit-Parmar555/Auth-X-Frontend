@@ -7,17 +7,19 @@ import { Button } from "@/components/ui/button.jsx";
 // utils
 import { formatDate } from "@/utils/date";
 
+// store import
+import { useAuthStore } from "@/store/useAuthStore";
+import toast from "react-hot-toast";
+
 const DashBoard = () => {
-  const navigate = useNavigate();
+  const { user, logout, loggingout } = useAuthStore();
 
   const handleLogout = async () => {
-    console.log("Logout");
-  };
-
-  const user = {
-    username: "JohnDoe",
-    email: "test@test.com",
-    createdAt: "2023-10-01T12:00:00Z",
+    try {
+      await logout();
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -42,9 +44,10 @@ const DashBoard = () => {
 
         <Button
           onClick={handleLogout}
+          disabled={loggingout}
           className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md text-sm sm:text-base font-[Space_Grotesk] cursor-pointer"
         >
-          Logout
+          {loggingout ? "Logging out..." : "Logout"}
         </Button>
       </div>
     </div>

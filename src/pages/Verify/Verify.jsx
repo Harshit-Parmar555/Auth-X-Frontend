@@ -8,8 +8,14 @@ import Footer from "@/custom/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button.jsx";
 
+// store import
+import { useAuthStore } from "@/store/useAuthStore";
+import toast from "react-hot-toast";
+
 const Verify = () => {
   const navigate = useNavigate();
+  const { verify, verifing } = useAuthStore();
+
   const {
     register,
     handleSubmit,
@@ -18,7 +24,14 @@ const Verify = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const response = await verify(data);
+      if (response.success === true) {
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div className="h-dvh flex flex-col items-center justify-center bg-black text-white">
@@ -42,8 +55,11 @@ const Verify = () => {
           {errors.token && (
             <p className="text-red-500 text-xs">{errors.token.message}</p>
           )}
-          <Button className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md font-[Space_Grotesk] cursor-pointer">
-            Verify
+          <Button
+            disabled={verifing}
+            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md font-[Space_Grotesk] cursor-pointer"
+          >
+            {verifing ? "Verifying..." : "Verify"}
           </Button>
         </form>
       </div>

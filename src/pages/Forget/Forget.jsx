@@ -8,8 +8,12 @@ import Footer from "@/custom/Footer";
 import { Input } from "@/components/ui/input.jsx";
 import { Button } from "@/components/ui/button.jsx";
 
+// store import
+import { useAuthStore } from "@/store/useAuthStore";
+import toast from "react-hot-toast";
+
 const Forgot = () => {
-  const navigate = useNavigate();
+  const { requestingResetUrl, forgetPassword } = useAuthStore();
 
   const {
     register,
@@ -19,7 +23,11 @@ const Forgot = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      await forgetPassword(data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div className="h-dvh flex flex-col items-center justify-center bg-black text-white">
@@ -44,8 +52,11 @@ const Forgot = () => {
             <p className="text-red-500 text-xs">{errors.email.message}</p>
           )}
 
-          <Button className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md cursor-pointer">
-            Request Reset Link
+          <Button
+            disabled={requestingResetUrl}
+            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md cursor-pointer"
+          >
+            {requestingResetUrl ? "Sending..." : "Send Reset Link"}
           </Button>
         </form>
 

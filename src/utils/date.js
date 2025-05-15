@@ -1,4 +1,4 @@
-// Format mongo Db date
+// Utility function to format date strings
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) {

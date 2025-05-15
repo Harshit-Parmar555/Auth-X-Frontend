@@ -1,3 +1,4 @@
+// custom password strength meter component
 const PasswordStrengthMeter = ({ password = "" }) => {
   const getStrength = (pass) => {
     let strength = 0;

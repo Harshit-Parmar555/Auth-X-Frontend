@@ -9,18 +9,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import PasswordStrengthMeter from "@/custom/PasswordStrengthMeter";
 
+// store
+import { useAuthStore } from "@/store/useAuthStore";
+import toast from "react-hot-toast";
+
 const Signup = () => {
   const navigate = useNavigate();
+  const { register, registering } = useAuthStore();
 
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const response = await register(data);
+      if (response.success === true) {
+        navigate("/verify");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -40,7 +52,7 @@ const Signup = () => {
               type="text"
               placeholder="Username"
               className="border border-zinc-700 h-12 text-sm font-[Inter]"
-              {...register("username", {
+              {...formRegister("username", {
                 required: "Username is required",
                 minLength: {
                   value: 3,
@@ -61,7 +73,7 @@ const Signup = () => {
               type="email"
               placeholder="Email"
               className="border border-zinc-700 h-12 text-sm font-[Inter]"
-              {...register("email", {
+              {...formRegister("email", {
                 required: "Email is required",
                 pattern: {
                   value: /^\S+@\S+\.\S+$/,
@@ -82,7 +94,7 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               className="border border-zinc-700 h-12 text-sm font-[Inter]"
-              {...register("password", {
+              {...formRegister("password", {
                 required: "Password is required",
                 minLength: {
                   value: 6,
@@ -103,8 +115,11 @@ const Signup = () => {
           </div>
 
           {/* Submit Button */}
-          <Button className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md font-[Space_Grotesk] cursor-pointer">
-            Sign Up
+          <Button
+            disabled={registering}
+            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md font-[Space_Grotesk] cursor-pointer"
+          >
+            {registering ? "Registering..." : "Register"}
           </Button>
         </form>
 

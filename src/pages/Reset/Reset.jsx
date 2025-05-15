@@ -9,9 +9,14 @@ import Footer from "@/custom/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+// store import
+import { useAuthStore } from "@/store/useAuthStore";
+import toast from "react-hot-toast";
+
 const Reset = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const { resetPassword, resettingPassword } = useAuthStore();
 
   const {
     register,
@@ -21,7 +26,14 @@ const Reset = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const response = await resetPassword(token, data);
+      if (response.success === true) {
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div className="h-dvh flex flex-col items-center justify-center bg-black text-white">
@@ -46,8 +58,11 @@ const Reset = () => {
             <p className="text-red-500 text-xs">{errors.password.message}</p>
           )}
 
-          <Button className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md font-[Space_Grotesk] cursor-pointer">
-            Reset Password
+          <Button
+            disabled={resettingPassword}
+            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md font-[Space_Grotesk] cursor-pointer"
+          >
+            {resettingPassword ? "Resetting..." : "Reset Password"}
           </Button>
         </form>
       </div>

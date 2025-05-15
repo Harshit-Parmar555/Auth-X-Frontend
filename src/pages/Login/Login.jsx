@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,8 +9,11 @@ import Footer from "@/custom/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.jsx";
 
+// store import
+import { useAuthStore } from "@/store/useAuthStore";
+
 const Login = () => {
-  const navigate = useNavigate();
+  const { login, logging } = useAuthStore();
 
   const {
     register,
@@ -19,7 +23,11 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const response = await login(data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div className="h-dvh flex flex-col items-center justify-center bg-black text-white">
@@ -58,8 +66,11 @@ const Login = () => {
           >
             Forget Password ?
           </Link>
-          <Button className="mt-2 bg-blue-500 text-white px-6 py-2 rounded-md cursor-pointer">
-            Login
+          <Button
+            disabled={logging}
+            className="mt-2 bg-blue-500 text-white px-6 py-2 rounded-md cursor-pointer"
+          >
+            {logging ? "Logging..." : "Login"}
           </Button>
         </form>
 
