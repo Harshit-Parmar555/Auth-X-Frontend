@@ -26,7 +26,7 @@ This is the **frontend client** for **Auth-X**, a complete MERN stack authentica
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/auth-x-frontend.git
+git clone https://github.com/Harshit-Parmar555/Auth-X-Frontend.git
 cd frontend
 ```
 
