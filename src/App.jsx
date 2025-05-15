@@ -9,6 +9,7 @@ import Login from "./pages/Login/Login";
 import DashBoard from "./pages/DashBoard/DashBoard";
 import Forgot from "./pages/Forget/Forget";
 import Reset from "./pages/Reset/Reset";
+import NotFound from "./pages/404/NotFound";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/forgetpassword" element={<Forgot />} />
         <Route path="/resetpassword/:token" element={<Reset />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
