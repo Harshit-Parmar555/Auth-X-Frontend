@@ -11,6 +11,7 @@ import Forgot from "./pages/Forget/Forget";
 import Reset from "./pages/Reset/Reset";
 import NotFound from "./pages/404/NotFound";
 import Terms from "./pages/T&P/Terms";
+import Privacy from "./pages/T&P/Privacy";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/forgetpassword" element={<Forgot />} />
         <Route path="/resetpassword/:token" element={<Reset />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
