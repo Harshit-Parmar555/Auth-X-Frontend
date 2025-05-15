@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // pages import
@@ -39,7 +39,22 @@ const RedirectAuthenticatedUser = ({ children }) => {
   return children;
 };
 
+import Loader from "./custom/Loader";
+
 const App = () => {
+  const { checkAuth, checkingAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  if (checkingAuth) {
+    return (
+      <div className="h-screen flex justify-center items-center bg-black text-white">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <BrowserRouter>
       <Toaster
