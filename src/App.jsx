@@ -1,18 +1,18 @@
 // Importing necessary modules
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // pages import
-import Land from "./pages/Land/Land";
-import Register from "./pages/Register/Register";
-import Verify from "./pages/Verify/Verify";
-import Login from "./pages/Login/Login";
-import DashBoard from "./pages/DashBoard/DashBoard";
-import Forgot from "./pages/Forget/Forget";
-import Reset from "./pages/Reset/Reset";
-import NotFound from "./pages/404/NotFound";
-import Terms from "./pages/T&P/Terms";
-import Privacy from "./pages/T&P/Privacy";
+const Land = React.lazy(() => import("./pages/Land/Land.jsx"));
+const Register = React.lazy(() => import("./pages/Register/Register.jsx"));
+const Verify = React.lazy(() => import("./pages/Verify/Verify.jsx"));
+const Login = React.lazy(() => import("./pages/Login/Login.jsx"));
+const DashBoard = React.lazy(() => import("./pages/DashBoard/DashBoard.jsx"));
+const Forgot = React.lazy(() => import("./pages/Forget/Forget.jsx"));
+const Reset = React.lazy(() => import("./pages/Reset/Reset.jsx"));
+const NotFound = React.lazy(() => import("./pages/404/NotFound.jsx"));
+const Terms = React.lazy(() => import("./pages/T&P/Terms.jsx"));
+const Privacy = React.lazy(() => import("./pages/T&P/Privacy.jsx"));
 
 // Toaster import
 import { Toaster } from "react-hot-toast";
@@ -85,81 +85,83 @@ const App = () => {
           },
         }}
       />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RedirectAuthenticatedUser>
-              <Land />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <RedirectAuthenticatedUser>
-              <Register />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/verify"
-          element={
-            <RedirectAuthenticatedUser>
-              <Verify />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <RedirectAuthenticatedUser>
-              <Login />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashBoard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/forgetpassword"
-          element={
-            <RedirectAuthenticatedUser>
-              <Forgot />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/resetpassword/:token"
-          element={
-            <RedirectAuthenticatedUser>
-              <Reset />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/terms"
-          element={
-            <RedirectAuthenticatedUser>
-              <Terms />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/privacy"
-          element={
-            <RedirectAuthenticatedUser>
-              <Privacy />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <RedirectAuthenticatedUser>
+                <Land />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <RedirectAuthenticatedUser>
+                <Register />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/verify"
+            element={
+              <RedirectAuthenticatedUser>
+                <Verify />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RedirectAuthenticatedUser>
+                <Login />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashBoard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/forgetpassword"
+            element={
+              <RedirectAuthenticatedUser>
+                <Forgot />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/resetpassword/:token"
+            element={
+              <RedirectAuthenticatedUser>
+                <Reset />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <RedirectAuthenticatedUser>
+                <Terms />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/privacy"
+            element={
+              <RedirectAuthenticatedUser>
+                <Privacy />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };
